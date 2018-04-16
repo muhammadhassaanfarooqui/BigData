@@ -3,6 +3,7 @@ import math
 import numpy as np
 from random import *
 from scipy.spatial.distance import euclidean
+from scipy import stats
 from fastdtw import fastdtw
 
 
@@ -22,12 +23,6 @@ def createTimeSeries(size):
         ls = np.append(ls, i%hours)
     return ls
 
-def main():
-    array1 = readFile("../alligned-files/hourly-taxi-trip-count/hourlyTripCountJan2016.out").reshape(-1, 1)
-    array2 = readFile("../alligned-files/hourly-average-temperature/hourly-average-temperature-jan2016.out").reshape(-1, 1)
-    distance, path = fastdtw(normalize(array1), normalize(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
-    print(distance/len(array1))
-
 def normalize(array):
     minVal = min(array)[0]
     maxVal = max(array)[0]
@@ -39,5 +34,15 @@ def normalize(array):
     else:
         return temp / maxVal
 
+def createZeroArray(size):
+    return np.array([0]*size).reshape(-1, 1)
+
+def main():
+    array1 = readFile("../alligned-files/hourly-taxi-trip-count/hourlyTripCountJan2016.out").reshape(-1, 1)
+    array2 = readFile("../alligned-files/hourly-average-temperature/hourly-average-temperature-jan2016.out").reshape(-1, 1)
+    distanceXY, _ = fastdtw(stats.zscore(array1), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
+    distanceX0, _ = fastdtw(stats.zscore(array1), createZeroArray(len(array1)), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
+    distance0Y, _ = fastdtw(createZeroArray(len(array2)), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
+    print(1 - (distanceXY/(distanceX0 + distance0Y)))
 
 main()
