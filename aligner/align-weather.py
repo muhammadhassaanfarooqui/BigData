@@ -8,12 +8,12 @@ sc = SparkContext()
 
 lines = sc.textFile(sys.argv[1])
 weatherData_lines = lines.mapPartitions(lambda x: reader(x))
-date = weatherData_lines[0]
-temperature = weatherData_lines[4]
+date_column = 0
+temperature_column = 4
 
 output_file = sys.argv[2]
 
-field_count = weatherData_lines.map(lambda x: (date, temperature )) \
+field_count = weatherData_lines.map(lambda x: (x[date_column],x[temperature_column] )) \
 							.map(lambda x: (x[0], (float(x[1]), 1.00)) if ("999" not in x[1]) and ("201101" in x[0]) else ("0", (0.00,1.00))) \
 							.reduceByKey(lambda x, y: (x[0] + y[0], x[1]+y[1])) \
 							.sortByKey()

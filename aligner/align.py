@@ -12,7 +12,7 @@ date_time = tripdata_lines[2]
 
 output_file = sys.argv[2]
 
-field_count = tripdata_lines.map(lambda x: (date_time[:13])) \
+field_count = date_time.map(lambda x: (x[:13])) \
 							.map(lambda x: (x, 1) if "2016-02" in x else ("0", 0)) \
 							.reduceByKey(lambda x, y: x + y) \
 							.sortByKey()
