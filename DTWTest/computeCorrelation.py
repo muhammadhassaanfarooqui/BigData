@@ -38,10 +38,8 @@ def createZeroArray(size):
     return np.array([0]*size).reshape(-1, 1)
 
 def computeDistance(fname1, fname2):
-    # array1 = readFile().reshape(-1, 1)
     array1 = readFile(fname1).reshape(-1, 1)
     array2 = readFile(fname2).reshape(-1, 1)
-    # array2 = readFile("../alligned-files/daily-average-temperature/daily-average-temperature-Jan2016.out").reshape(-1, 1)
     distanceXY, _ = fastdtw(stats.zscore(array1), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
     distanceX0, _ = fastdtw(stats.zscore(array1), createZeroArray(len(array1)), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
     distance0Y, _ = fastdtw(createZeroArray(len(array2)), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
@@ -51,8 +49,14 @@ def main():
     hourlyTemperatureFile = "../alligned-files/hourly-average-temperature/hourly-average-temperature-jan2016.out"
     hourlyAvgTripDistFile = "../alligned-files/hourly-avg-trip-distance/hourly-avg-trip-distance-Jan2016.out"
     hourlyTripCountFile = "../alligned-files/hourly-taxi-trip-count/hourlyTripCountJan2016.out" 
+    hourlyAvgFareFile = "../alligned-files/hourly-avg-fare/hourly-avg-fare-Jan2016.out"
+    hourlyAvgTollFile = "../alligned-files/hourly-avg-toll/hourly-avg-toll-Jan2016.out"
     print("hourlyAvgTripDistance - hourlyAverageTemperature")
     print(computeDistance(hourlyAvgTripDistFile, hourlyTemperatureFile))
     print("hourlyTripCount - hourlyAverageTemperature")
     print(computeDistance(hourlyTripCountFile, hourlyTemperatureFile))
+    print("hourlyAvgFare - hourlyAverageTemperature")
+    print(computeDistance(hourlyAvgFareFile, hourlyTemperatureFile))
+    print("hourlyAvgToll - hourlyAverageTemperature")
+    print(computeDistance(hourlyAvgTollFile, hourlyTemperatureFile))
 main()
