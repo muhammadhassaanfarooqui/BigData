@@ -10,8 +10,13 @@ from fastdtw import fastdtw
 def readFile(fname):
     with open(fname) as f:
         content = f.readlines()
-    temp = [x.strip().split('\t') for x in content]
-    return np.array([float(x[1]) for x in temp])
+    temp = [x.strip().split('\t')[1].split(',') for x in content]
+    numColumns = len(temp[0])
+    arrays = [np.array([])] * numColumns
+    for i in range(numColumns):
+        arrays[i] = np.array([float(x[i]) for x in temp])
+    return arrays
+    #return np.array([float(x[1]) for x in temp])
 
 def createArray(size):
     return np.array([randint(1, 10) for i in range(size)])
@@ -38,17 +43,23 @@ def createZeroArray(size):
     return np.array([0]*size).reshape(-1, 1)
 
 def computeDistance(fname1, fname2):
-    array1 = readFile(fname1).reshape(-1, 1)
-    array2 = readFile(fname2).reshape(-1, 1)
-    distanceXY, _ = fastdtw(stats.zscore(array1), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
-    distanceX0, _ = fastdtw(stats.zscore(array1), createZeroArray(len(array1)), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
-    distance0Y, _ = fastdtw(createZeroArray(len(array2)), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
-    return (1 - (distanceXY/(distanceX0 + distance0Y)))
+    file1Arrays = readFile(fname1)
+    file2Arrays = readFile(fname2)
+    distances = []
+    for arr1 in file1Arrays:
+        for arr2 in file2Arrays:
+            array1 = arr1.reshape(-1, 1)
+            array2 = arr2.reshape(-1, 1)
+            distanceXY, _ = fastdtw(stats.zscore(array1), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
+            distanceX0, _ = fastdtw(stats.zscore(array1), createZeroArray(len(array1)), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
+            distance0Y, _ = fastdtw(createZeroArray(len(array2)), stats.zscore(array2), dist=lambda x, y: np.linalg.norm(x - y, ord=1))
+            distances.append((1 - (distanceXY/(distanceX0 + distance0Y))))
+    return distances
 
 def main():
     hourlyTemperatureFile = "../alligned-files/hourly-average-temperature/hourly-average-temperature-jan2016.out"
     hourlyAvgTripDistFile = "../alligned-files/hourly-avg-trip-distance/hourly-avg-trip-distance-Jan2016.out"
-    hourlyTripCountFile = "../alligned-files/hourly-taxi-trip-count/hourlyTripCountJan2016.out" 
+    hourlyTripCountFile = "../alligned-files/hourly-taxi-trip-count/hourlyTripCountJan2016.out"
     hourlyAvgFareFile = "../alligned-files/hourly-avg-fare/hourly-avg-fare-Jan2016.out"
     hourlyAvgTollFile = "../alligned-files/hourly-avg-toll/hourly-avg-toll-Jan2016.out"
     print("hourlyAvgTripDistance - hourlyAverageTemperature")
