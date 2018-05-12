@@ -1,4 +1,3 @@
-from dtw import dtw
 import math
 import numpy as np
 from random import *
