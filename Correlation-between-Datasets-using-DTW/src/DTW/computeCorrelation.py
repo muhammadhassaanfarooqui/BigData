@@ -58,15 +58,15 @@ def computeDistance(fname1, fname2):
     return distances
 
 def main():
-    hourlyTemperatureJanuaryFile = "../alligned-files/hourly-average-temperature/hourly-average-temperature-jan2016.out"
-    hourlyTemperatureFile = "../alligned-files/hourly-average-temperature/hourly-avg-temp.out"
-    hourlyAvgTripDistFile = "../alligned-files/hourly-avg-trip-distance/hourly-avg-trip-distance-Jan2016.out"
-    hourlyTripCountFile = "../alligned-files/hourly-taxi-trip-count/hourlyTripCountJan2016.out"
-    hourlyAvgFareFile = "../alligned-files/hourly-avg-fare/hourly-avg-fare-Jan2016.out"
-    hourlyAvgTollFile = "../alligned-files/hourly-avg-toll/hourly-avg-toll-Jan2016.out"
-    hourlyTaxiDataFile = "../alligned-files/hourly-taxi-data/hourly-avg-taxiData.out"
-    workhoursFile = "../alligned-files/hourly-average-temperature/hourly-workhours-avg-temp.out"
-    taxitempFile = "../alligned-files/hourly-taxi-data/hourly-workhours-avg-taxiData.out"
+    hourlyTemperatureJanuaryFile = "../../Aggregated Data/Weather/hourly-average-temperature/hourly-average-temperature-jan2016.out"
+    hourlyTemperatureFile = "../../Aggregated Data/Weather/hourly-average-temperature/hourly-avg-temp.out"
+    hourlyAvgTripDistFile = "../../Aggregated Data/Taxi/hourly-avg-trip-distance/hourly-avg-trip-distance-Jan2016.out"
+    hourlyTripCountFile = "../../Aggregated Data/Taxi/hourly-taxi-trip-count/hourlyTripCountJan2016.out"
+    hourlyAvgFareFile = "../../Aggregated Data/Taxi/hourly-avg-fare/hourly-avg-fare-Jan2016.out"
+    hourlyAvgTollFile = "../../Aggregated Data/Taxi/hourly-avg-toll/hourly-avg-toll-Jan2016.out"
+    hourlyTaxiDataFile = "../../Aggregated Data/Taxi/hourly-taxi-data/hourly-avg-taxiData.out"
+    workhoursFile = "../../Aggregated Data/Weather/hourly-average-temperature/hourly-workhours-avg-temp.out"
+    taxitempFile = "../../Aggregated Data/hourly-taxi-data/hourly-workhours-avg-taxiData.out"
     print("hourlyAvgTripDistance - hourlyAverageTemperature")
     print(computeDistance(hourlyAvgTripDistFile, hourlyTemperatureJanuaryFile))
     print("hourlyTripCount - hourlyAverageTemperature")
@@ -77,6 +77,6 @@ def main():
     print(computeDistance(hourlyAvgTollFile, hourlyTemperatureJanuaryFile))
     print("hourlyTaxiData - hourlyAverageTemperature")
     print(computeDistance(hourlyTaxiDataFile, hourlyTemperatureFile))
-    print("workhours - taxiTemp")
-    print(computeDistance(workhoursFile, taxitempFile))
+    # print("workhours - taxiTemp")
+    # print(computeDistance(workhoursFile, taxitempFile))
 main()
