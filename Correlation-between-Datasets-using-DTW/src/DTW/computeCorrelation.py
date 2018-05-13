@@ -58,10 +58,10 @@ def computeDistance(fname1, fname2):
         for arr2 in file2Arrays:
             array1 = arr1.reshape(-1, 1)
             array2 = arr2.reshape(-1, 1)
-            zeroArraySize = max(len(array2), len(array1))
+            zeroArraySize = len(array2) + len(array1)
             distanceXY, _ = fastdtw(stats.zscore(array1), stats.zscore(array2))
             distanceX0, _ = fastdtw(stats.zscore(array1), createZeroArray(zeroArraySize))
-            distanceY0, _ = fastdtw(stats.zscore(array2), createZeroArray(zeroArraySize))
+            distanceY0, _ = fastdtw(createZeroArray(zeroArraySize), stats.zscore(array2))
             distances.append((1 - (distanceXY/(distanceX0 + distanceY0))))
     return distances
 
