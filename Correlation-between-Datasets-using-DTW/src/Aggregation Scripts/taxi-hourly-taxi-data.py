@@ -26,7 +26,7 @@ def datetime(column):
 def convertAndClean(a, b, c, d, e):
 	try:
 		distance = float(b)
-		if distance < 100.00:
+		if distance < 50.00:
 			return (a, (distance, float(c), float(d), e))
 		else:
 			return ("00", (0.0, 0.0, 0.0, 1.0))
@@ -38,7 +38,9 @@ def mapper(row):
 		return []
 	else:
 		dateTime = datetime(row[date_time_column])
-		if dateTime[:6] is "2016-1": 
+		if  "2014" in dateTime[:4]:
+			return [(dateTime , row[trip_distance_column], row[fare_amount_column+1], row[tip_column+1] )]
+		elif dateTime[:6] is "2016-1": 
 			return [(dateTime , row[trip_distance_column], row[fare_amount_column-2], row[tip_column-2] )]
 		else:
 			return [(dateTime , row[trip_distance_column], row[fare_amount_column], row[tip_column] )]
