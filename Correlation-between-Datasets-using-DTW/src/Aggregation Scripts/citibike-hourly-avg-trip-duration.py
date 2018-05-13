@@ -28,5 +28,5 @@ field_count = tripdata_lines.map(lambda x: mapper(x)) \
                             .sortByKey()
 #                           .sortBy(lambda x: x[1]) \
 
-formatted_count = field_count.map(lambda x: ("%s\t%.2f" % (x[0], x[1][0]/x[1][1])))
+formatted_count = field_count.map(lambda x: ("%s\t%.2f, %.2f" % (x[0], x[1][0]/x[1][1], x[1][1])))
 formatted_count.saveAsTextFile(output_file)
