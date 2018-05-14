@@ -71,8 +71,11 @@ def usage():
 
 
 def main():
-    ls2 = ["311/311-hourly-status-count.out", "311/311-hourly-bronx-complaint-category-count.out", "311/311-hourly-brooklyn-complaint-category-count.out", "311/311-hourly-manhattan-complaint-category-count.out", "311/311-hourly-queens-complaint-category-count.out", "311/311-hourly-staten-island-complaint-category-count.out", "311/311-hourly-complaint-category-count-data.out", "Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
-    ls = ["Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+    # ls2 = ["311/311-hourly-status-count.out", "311/311-hourly-bronx-complaint-category-count.out", "311/311-hourly-brooklyn-complaint-category-count.out", "311/311-hourly-manhattan-complaint-category-count.out", "311/311-hourly-queens-complaint-category-count.out", "311/311-hourly-staten-island-complaint-category-count.out", "311/311-hourly-complaint-category-count-data.out", "Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+    # ls = ["Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+
+    ls2 = ["Citibike/hourly-citiBike-data.out"]
+    ls = ["Taxi/hourly-taxi-data/hourly-avg-taxi-data.out"]
 
     for i in range(len(ls)):
         for j in range(len(ls2)):

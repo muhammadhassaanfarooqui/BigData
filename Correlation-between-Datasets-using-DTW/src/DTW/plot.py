@@ -19,7 +19,7 @@ def readFile(fname):
     temp = []
     for x in content:
         val = x.strip().split('\t')
-        if("2015" in val[0] or "2017" in val[0]):
+        if("2016" in val[0] or "2017" in val[0]):
             temp.append(val[1].split(','))
     # temp = [x.strip().split('\t')[1].split(',') for x in content]
     numColumns = len(temp[0])
