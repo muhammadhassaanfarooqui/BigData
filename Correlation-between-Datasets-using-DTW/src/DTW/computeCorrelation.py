@@ -71,14 +71,21 @@ def usage():
 
 
 def main():
-    if(len(sys.argv) == 3):
-        fname1 = FILE_DIRECTORY_PREFIX + sys.argv[1]
-        fname2 = FILE_DIRECTORY_PREFIX + sys.argv[2]
-        print("Correlation among the two datasets is: %s on a range of 0 - 1" % (computeDistance(fname1, fname2)))
-        # plt.plot([1, 2], [1, 2])
-        # plt.show()
-    else:
-        usage()
+    ls2 = ["311/311-hourly-status-count.out", "311/311-hourly-bronx-complaint-category-count.out", "311/311-hourly-brooklyn-complaint-category-count.out", "311/311-hourly-manhattan-complaint-category-count.out", "311/311-hourly-queens-complaint-category-count.out", "311/311-hourly-staten-island-complaint-category-count.out", "311/311-hourly-complaint-category-count-data.out", "Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+    ls = ["Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+
+    for i in range(len(ls)):
+        for j in range(len(ls2)):
+            arg1 = ls[i]
+            arg2 = ls2[j]
+            if arg1 != arg2:
+                fname1 = FILE_DIRECTORY_PREFIX + arg1
+                fname2 = FILE_DIRECTORY_PREFIX + arg2
+                coeffs = computeDistance(fname1, fname2)
+                if len([x for x in coeffs if x > 0.55]) > 0:
+                    print ("!!!!PLOT GRAPH!!!!")
+                print("{} {}".format(arg1, arg2))
+                print("Correlation among the two datasets is: %s on a range of 0 - 1\n\n" % (coeffs))
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ def readFile(fname):
     temp = []
     for x in content:
         val = x.strip().split('\t')
-        if("2017-01" in val[0]):
+        if("2015" in val[0] or "2017" in val[0]):
             temp.append(val[1].split(','))
     # temp = [x.strip().split('\t')[1].split(',') for x in content]
     numColumns = len(temp[0])
@@ -33,8 +33,8 @@ def plot(fname1, fname2):
     file2Arrays = readFile(fname2)
     for arr1 in file1Arrays:
         for arr2 in file2Arrays:
-            plt.plot(stats.zscore(arr1.reshape(-1, 1)), color="red", linewidth=0.8)
-            plt.plot(stats.zscore(arr2.reshape(-1, 1)), color="blue", linewidth=1.0)
+            plt.plot(stats.zscore(arr1.reshape(-1, 1)), color="red", linewidth=0.15)
+            plt.plot(stats.zscore(arr2.reshape(-1, 1)), color="blue", linewidth=0.15)
             plt.show()
 
 
