@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import math
 import numpy as np
 from random import *
@@ -59,10 +58,10 @@ def computeDistance(fname1, fname2):
         for arr2 in file2Arrays:
             array1 = arr1.reshape(-1, 1)
             array2 = arr2.reshape(-1, 1)
-            zeroArraySize = max(len(array2), len(array1))
+            zeroArraySize = len(array2) + len(array1)
             distanceXY, _ = fastdtw(stats.zscore(array1), stats.zscore(array2))
             distanceX0, _ = fastdtw(stats.zscore(array1), createZeroArray(zeroArraySize))
-            distanceY0, _ = fastdtw(stats.zscore(array2), createZeroArray(zeroArraySize))
+            distanceY0, _ = fastdtw(createZeroArray(zeroArraySize), stats.zscore(array2))
             distances.append((1 - (distanceXY/(distanceX0 + distanceY0))))
     return distances
 
@@ -72,12 +71,21 @@ def usage():
 
 
 def main():
-    if(len(sys.argv) == 3):
-        fname1 = FILE_DIRECTORY_PREFIX + sys.argv[1]
-        fname2 = FILE_DIRECTORY_PREFIX + sys.argv[2]
-        print("Correlation among the two datasets is: %s on a range of 0 - 1" % (computeDistance(fname1, fname2)))
-    else:
-        usage()
+    ls2 = ["311/311-hourly-status-count.out", "311/311-hourly-bronx-complaint-category-count.out", "311/311-hourly-brooklyn-complaint-category-count.out", "311/311-hourly-manhattan-complaint-category-count.out", "311/311-hourly-queens-complaint-category-count.out", "311/311-hourly-staten-island-complaint-category-count.out", "311/311-hourly-complaint-category-count-data.out", "Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+    ls = ["Citibike/hourly-citiBike-data.out","Taxi/hourly-taxi-data/hourly-avg-taxi-data.out", "Weather/hourly-average-temperature/hourly-avg-temp.out"]
+
+    for i in range(len(ls)):
+        for j in range(len(ls2)):
+            arg1 = ls[i]
+            arg2 = ls2[j]
+            if arg1 != arg2:
+                fname1 = FILE_DIRECTORY_PREFIX + arg1
+                fname2 = FILE_DIRECTORY_PREFIX + arg2
+                coeffs = computeDistance(fname1, fname2)
+                if len([x for x in coeffs if x > 0.55]) > 0:
+                    print ("!!!!PLOT GRAPH!!!!")
+                print("{} {}".format(arg1, arg2))
+                print("Correlation among the two datasets is: %s on a range of 0 - 1\n\n" % (coeffs))
 
 
 if __name__ == '__main__':
